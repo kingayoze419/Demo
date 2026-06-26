@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="These are the best websites and platforms to learn coding for free as a beginner">
+  <meta name="keywords" content="learn coding, coding websites, programming, coding for beginners">
+  <meta name="google-site-verification" content="dvhnHDU4yFpRiC0IyRV8pbZtG8Nb9riP_C6i_7Uf87U" />
+  <title>Best sites to learn coding for beginners</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --navy-deep:   #000A1F;
+      --navy-mid:    #0a1a3a;
+      --navy-light:  #112257;
+      --blue-accent: #1e4db7;
+      --blue-bright: #3a7bd5;
+      --ice:         #e8f0fe;
+      --white:       #ffffff;
+      --text-muted:  #a0b4d6;
+      --border:      rgba(58, 123, 213, 0.25);
+      --radius:      8px;
+      --font-ui:     'Inter', sans-serif;
+      --font-code:   'Fira Code', monospace;
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--navy-deep);
+      color: var(--white);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── TOGGLE BUTTON ── */
+    .toggle-btn {
+      background: var(--navy-mid);
+      color: var(--white);
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      font-size: 14px;
+      font-family: var(--font-ui);
+      font-weight: 500;
+      cursor: pointer;
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      z-index: 100;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .toggle-btn:hover {
+      background: var(--navy-light);
+      border-color: var(--blue-bright);
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 220px;
+      background: var(--navy-mid);
+      border-right: 1px solid var(--border);
+      padding-top: 70px;
+      height: 100vh;
+      position: fixed;
+      left: -240px;
+      top: 0;
+      transition: left 0.35s cubic-bezier(.4,0,.2,1);
+      z-index: 90;
+    }
+    .sidebar.active { left: 0; }
+
+    .sidebar-label {
+      font-family: var(--font-code);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 12px 20px 6px;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-muted);
+      padding: 12px 20px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: color 0.2s, background 0.2s, padding-left 0.2s;
+      border-left: 2px solid transparent;
+    }
+    .sidebar a:hover {
+      color: var(--white);
+      background: rgba(58,123,213,0.1);
+      border-left-color: var(--blue-bright);
+      padding-left: 24px;
+    }
+    .sidebar a i { width: 16px; text-align: center; font-size: 13px; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--navy-mid);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 20px 14px 80px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      max-width: 380px;
+      width: 60%;
+    }
+    .search-box {
+      flex: 1;
+      padding: 9px 14px;
+      background: var(--navy-deep);
+      border: 1px solid var(--border);
+      border-right: none;
+      border-radius: var(--radius) 0 0 var(--radius);
+      color: var(--white);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-box::placeholder { color: var(--text-muted); }
+    .search-box:focus { border-color: var(--blue-bright); }
+    .search-btn {
+      padding: 9px 16px;
+      background: var(--blue-accent);
+      border: 1px solid var(--blue-accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      color: var(--white);
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .search-btn:hover { background: var(--blue-bright); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy-light) 60%, var(--blue-accent) 100%);
+      padding: 52px 24px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 39px,
+        rgba(58,123,213,0.07) 39px,
+        rgba(58,123,213,0.07) 40px
+      );
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-code);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--blue-bright);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .hero h1 {
+      font-family: var(--font-ui);
+      font-size: clamp(22px, 5vw, 36px);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin: 0 0 12px;
+      background: none;
+      padding: 0;
+    }
+    .hero-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-style: italic;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ── MAIN WRAPPER ── */
+    .main { padding-bottom: 0; }
+
+    main {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 32px 20px;
+    }
+    .ads-image {
+  width: 300px;      /* Adjust the size as needed */
+  height: auto;      /* Keeps the image proportions */
+  display: block;
+  margin: 20px auto; /* Centers the image */
+  border-radius: 10px; /* Optional: slightly rounded corners */
+}
+
+    /* ── SECTION LABELS ── */
+    .section-eyebrow {
+      font-family: var(--font-code);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--blue-bright);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* ── RESOURCES SECTION ── */
+    #resources {
+      margin-bottom: 40px;
+    }
+    #resources h2 {
+      font-family: var(--font-ui);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+      text-align: left;
+      text-decoration: none;
+      margin-bottom: 6px;
+    }
+    .section-sub {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+    .resources-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .resource-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px;
+      background: var(--navy-mid);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--white);
+      transition: border-color 0.2s, transform 0.2s, background 0.2s;
+    }
+    .resource-item:hover {
+      border-color: var(--blue-bright);
+      background: var(--navy-light);
+      transform: translateY(-2px);
+    }
+    .resource-item > i {
+      font-size: 18px;
+      color: var(--blue-bright);
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .resource-name {
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+    .resource-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-code);
+    }
+
+    /* ── BONUS / MUSIC SECTION ── */
+    .bonus-section {
+      margin-bottom: 40px;
+    }
+    .bonus-section h2 {
+      font-family: var(--font-ui);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .music-card {
+      background: var(--navy-mid);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 380px;
+    }
+    .music-title {
+      font-family: var(--font-code);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .music-title span {
+      color: var(--white);
+      font-weight: 500;
+    }
+    .music-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .music-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      background: var(--blue-accent);
+      color: var(--white);
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .music-btn:hover { background: var(--blue-bright); }
+    .music-btn.outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .music-btn.outline:hover {
+      border-color: var(--blue-bright);
+      color: var(--white);
+    }
+
+    /* ── IMAGE ── */
+    .site-image {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      display: block;
+      margin-top: 8px;
+    }
+
+    /* ── SOCIAL / INTERACT ── */
+    .bottom-dark {
+      background: var(--navy-mid);
+      border-top: 1px solid var(--border);
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .bottom-dark h3 {
+      font-family: var(--font-ui);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 20px;
+      letter-spacing: 0.02em;
+    }
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .social-icons a {
+      color: var(--text-muted);
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      font-size: 16px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+    .social-icons a:hover {
+      color: var(--white);
+      border-color: var(--blue-bright);
+      background: rgba(58,123,213,0.15);
+    }
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-family: var(--font-code);
+      transition: color 0.2s;
+    }
+    .contact-link:hover { color: var(--white); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-deep);
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 20px;
+      text-align: center;
+      font-family: var(--font-code);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+    footer p { line-height: 1.8; }
+
+    /* ── DIVIDERS ── */
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 8px 0 28px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Toggle Sidebar Button -->
+  <button class="toggle-btn" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i> Menu
+  </button>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-label">Navigation</div>
+    <a href="index3.html"><i class="fas fa-home"></i> Home</a>
+    <a href="https://chat.openai.com/" target="_blank"><i class="fas fa-robot"></i> Visit AI</a>
+    <a href="https://wa.me/message/CKPP46B3H2DJD1"><i class="fas fa-store"></i> Purchase</a>
+    <a href="#"><i class="fas fa-cogs"></i> Services</a>
+    <a href="Login.html"><i class="fas fa-user"></i> Sign In</a>
+  </div>
+
+  <!-- Main Wrapper -->
+  <div class="main">
+
+    <!-- Top Search Bar -->
+    <div class="topbar">
+      <div class="search-container">
+        <input type="text" placeholder="Search..." class="search-box">
+        <button class="search-btn"><i class="fas fa-search"></i></button>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-eyebrow">// Tech Amera</div>
+      <h1>WELCOME TO TECH AMERA</h1>
+      <p class="hero-sub">This is just a demo. If you spot something wrong and want to help, feel free to reach out.</p>
+    </div>
+
+    <!-- Page Content -->
+    <main>
+      <p>
+            <section id="Commerce">
+        <div class="section-eyebrow">// E-commerce</div>
+        <img src="Ads.jpg" alt="Gentleman's Essentials Advertisement" class="ads-image">
+        <h2>GENTLEMAN'S ESSENTIALS</h2>
+        <p class="section-sub">Purchase all your modern gentleman's clothes and accesories at low prices here.
+        Fast and safe delivery is assured.</p>
+        <div class="resources-list">
+          <a href="https://wa.me/message/CKPP46B3H2DJD1" target="_blank" class="resource-item">
+            <i class="fas fa-store"></i>
+            <div>
+              <div class="resource-name">PURCHASE</div>
+              <div class="resource-desc">CLICK  HERE TO GET STARTED</div>
+            </div>
+          </a>
+        </div>
+      </section>
+      </p>
+      <br>
+      <div class="section-divider"></div>
+
+      <!-- Resources -->
+      <section id="resources">
+        <div class="section-eyebrow">// Resources</div>
+        <h2>Best Sites to Learn Coding</h2>
+        <p class="section-sub">Hand-picked platforms I recommend to every beginner starting their coding journey.</p>
+        <div class="section-divider"></div>
+        <div class="resources-list">
+          <a href="https://www.w3schools.com" target="_blank" class="resource-item">
+            <i class="fas fa-school"></i>
+            <div>
+              <div class="resource-name">W3Schools</div>
+              <div class="resource-desc">Reference + tutorials for web tech</div>
+            </div>
+          </a>
+          <a href="https://www.freecodecamp.org" target="_blank" class="resource-item">
+            <i class="fas fa-star"></i>
+            <div>
+              <div class="resource-name">freeCodeCamp</div>
+              <div class="resource-desc">Full-stack curriculum, free forever</div>
+            </div>
+          </a>
+          <a href="https://www.youtube.com/@programmingwithmosh" target="_blank" class="resource-item">
+            <i class="fab fa-youtube"></i>
+            <div>
+              <div class="resource-name">Programming with Mosh</div>
+              <div class="resource-desc">High-quality YouTube courses</div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- Bonus: Music -->
+      <section class="bonus-section">
+        <div class="section-eyebrow">// Bonus</div>
+        <h2>🎵 Listen &amp; Download</h2>
+        <div class="section-divider"></div>
+        <div class="music-card">
+          <div class="music-title">Now playing — <span>Shayshay · Care for me</span></div>
+          <div class="music-actions">
+            <a href="Care for me.mp3" class="music-btn">
+              <i class="fas fa-play-circle"></i> Play
+            </a>
+            <a href="Care for me.mp3" download class="music-btn outline">
+              <i class="fas fa-circle-arrow-down"></i> Download
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Image -->
+      <img src="C4.png" class="site-image" alt="Tech Amera visual">
+
+    </main>
+
+    <!-- Social / Contact -->
+    <section class="bottom-dark">
+      <h3>Interact with us</h3>
+      <div class="social-icons">
+        <a href="https://x.com/KwekuPhilosopha" target="_blank" title="X / Twitter"><i class="fab fa-x-twitter"></i></a>
+        <a href="mailto:shadrackeghan015@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+        <a href="https://www.facebook.com/kingayoze419" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="https://instagram.com/kingayoze419" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/+233596119789" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.youtube.com/@kingayoze419" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+      <a href="#" class="contact-link"><i class="fas fa-phone"></i> +233 596 119 789</a>
+    </section>
+
+    <footer>
+      <p>&copy; 2026 Skytech &mdash; All rights reserved</p>
+    </footer>
+
+  </div><!-- /.main -->
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+#top-scorers table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+#top-scorers th,
+#top-scorers td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:center;
+}
+
+#top-scorers th{
+    background:#007bff;
+    color:white;
+}

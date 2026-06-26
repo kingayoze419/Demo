@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShayShay — Music</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1e1e1e;
+      --gold: #c9922a;
+      --gold-light: #e8b44a;
+      --text: #f0ede8;
+      --muted: #6b6560;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 4rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.12em;
+      color: var(--text);
+    }
+
+    .logo span { color: var(--gold); }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-left: 2.5rem;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 7rem 4rem 4rem;
+      max-width: 680px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 9vw, 7.5rem);
+      line-height: 0.92;
+      letter-spacing: 0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 420px;
+    }
+
+    /* ── RELEASES ── */
+    .releases {
+      padding: 4rem 4rem 6rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.25s;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold);
+    }
+
+    .card-art {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover .card-art {
+      transform: scale(1.03);
+    }
+
+    .card-info {
+      padding: 1.1rem 1.2rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+    }
+
+    .card-meta {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-top: 0.3rem;
+      text-transform: uppercase;
+    }
+
+    .play-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      background: transparent;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
+    }
+    .play-btn:hover { background: var(--gold); color: #000; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .lightbox.open { display: flex; }
+
+    .lightbox img {
+      max-width: min(720px, 90vw);
+      max-height: 90vh;
+      object-fit: contain;
+      box-shadow: 0 0 80px rgba(201,146,42,0.15);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      font-size: 2rem;
+      color: var(--muted);
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .lightbox-close:hover { color: var(--text); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer p {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    .gold-line {
+      width: 2.5rem;
+      height: 2px;
+      background: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      header { padding: 1.5rem 1.5rem; }
+      nav { display: none; }
+      .hero { padding: 4rem 1.5rem 3rem; }
+      .releases { padding: 3rem 1.5rem 5rem; }
+      footer { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Shay<span>Shay</span></div>
+    <nav>
+      <a href="#releases">Releases</a>
+      <a href="#">Music</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <p class="hero-eyebrow">Official Artist Page</p>
+    <h1>Shay<br><em>Shay</em></h1>
+    <p>Rapper. Storyteller. Street philosopher. Every release a chapter — unfiltered and direct.</p>
+  </section>
+
+  <section class="releases" id="releases">
+    <p class="section-label">Latest Releases</p>
+
+    <div class="grid">
+
+      <div class="card" onclick="openLightbox(this)">
+        <img class="card-art" src="C1.png" alt="Watch No Man" />
+        <div class="card-info">
+          <div>
+            <div class="card-title">Watch No Man</div>
+            <div class="card-meta">Single &nbsp;·&nbsp; 2026</div>
+          </div>
+          <button class="play-btn" aria-label="Play">
+            <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><path d="M0 0l12 7-12 7V0z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="card" onclick="openLightbox(this)">
+        <img class="card-art" src="C2.png" alt="Care For Me" />
+        <div class="card-info">
+          <div>
+            <div class="card-title">Care For Me</div>
+            <div class="card-meta">Single &nbsp;·&nbsp; 2026</div>
+          </div>
+          <button class="play-btn" aria-label="Play">
+            <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><path d="M0 0l12 7-12 7V0z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="card" onclick="openLightbox(this)">
+        <img class="card-art" src="C3.png" alt="Always" />
+        <div class="card-info">
+          <div>
+            <div class="card-title">Always</div>
+            <div class="card-meta">Single &nbsp;·&nbsp; 2026</div>
+          </div>
+          <button class="play-btn" aria-label="Play">
+            <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><path d="M0 0l12 7-12 7V0z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="card" onclick="openLightbox(this)">
+        <img class="card-art" src="C4.png" alt="Ewiase Yesum" />
+        <div class="card-info">
+          <div>
+            <div class="card-title">Ewiase Yesum</div>
+            <div class="card-meta">Single &nbsp;·&nbsp; 2026</div>
+          </div>
+          <button class="play-btn" aria-label="Play">
+            <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><path d="M0 0l12 7-12 7V0z"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
+  <footer>
+    <div>
+      <div class="gold-line"></div>
+      <p>© 2026 ShayShay · All rights reserved</p>
+    </div>
+    <p>Parental Advisory — Explicit Content</p>
+  </footer>
+
+  <script>
+    function openLightbox(card) {
+      const img = card.querySelector('.card-art');
+      document.getElementById('lightbox-img').src = img.src;
+      document.getElementById('lightbox-img').alt = img.alt;
+      document.getElementById('lightbox').classList.add('open');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+
+</body>
+</html>

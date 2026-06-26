@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tech Amera – Developer Portfolio of Shadrack">
+  <title>Tech Amera | Portfolio</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #000A1F;
+      --navy2:   #0a0a23;
+      --accent:  #4da6ff;
+      --white:   #ffffff;
+      --offwhite:#f0f4ff;
+      --muted:   #8899bb;
+      --card-bg: #f7f9ff;
+      --border:  #dde4f0;
+      --font-mono: 'Fira Code', monospace;
+      --font-sans: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Fira code',monospace;
+      background: var(--white);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ──────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: var(--navy);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 56px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--white);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 1px;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      transition: transform .3s, opacity .3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 56px; left: 0; right: 0;
+      background: var(--navy2);
+      z-index: 99;
+      padding: 16px 0;
+      flex-direction: column;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 12px 28px;
+      letter-spacing: 1px;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      transition: color .2s, background .2s;
+    }
+    .mobile-menu a:hover { color: var(--white); background: rgba(77,166,255,.08); }
+
+    /* ── SECTIONS COMMON ─────────────────── */
+    section { padding: 80px 24px; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(22px, 5vw, 36px);
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .section-sub {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    /* ── HERO ─────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      padding: 80px 24px 60px;
+    }
+    .hero-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+    .hero-name {
+      font-size: clamp(36px, 9vw, 72px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .hero-name .cursor {
+      display: inline-block;
+      width: 3px;
+      height: .85em;
+      background: var(--accent);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero-role {
+      font-family: var(--font-mono);
+      font-size: clamp(14px, 3vw, 20px);
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+    .hero-bio {
+      font-size: 15px;
+      color: #8fa5c8;
+      line-height: 1.75;
+      max-width: 520px;
+      margin-bottom: 40px;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      padding: 11px 26px;
+      background: var(--accent);
+      color: var(--navy);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity .2s;
+      letter-spacing: 1px;
+    }
+    .btn-primary:hover { opacity: .85; }
+    .btn-outline {
+      padding: 11px 26px;
+      background: transparent;
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid rgba(255,255,255,.3);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s, color .2s;
+      letter-spacing: 1px;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-scroll {
+      margin-top: 60px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 2px;
+    }
+    .hero-scroll::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--muted);
+    }
+
+    /* ── ABOUT ───────────────────────────── */
+    #about { background: var(--offwhite); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+      margin-top: 40px;
+    }
+    .about-text p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #334;
+      margin-bottom: 14px;
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 20px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* ── SKILLS ──────────────────────────── */
+    #skills { background: var(--white); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .skill-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--navy);
+      transition: border-color .2s, transform .2s;
+      cursor: default;
+    }
+    .skill-pill:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .skill-pill i { color: var(--accent); font-size: 15px; }
+
+    /* ── PROJECTS ────────────────────────── */
+    #projects { background: var(--offwhite); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .project-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,10,31,.1);
+    }
+    .project-card-top {
+      background: var(--navy2);
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .project-icon {
+      width: 40px; height: 40px;
+      background: rgba(77,166,255,.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--accent);
+    }
+    .project-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .project-card-body { padding: 20px; }
+    .project-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .project-desc {
+      font-size: 13px;
+      color: #556;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+    .project-links {
+      display: flex;
+      gap: 12px;
+    }
+    .project-links a {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: opacity .2s;
+    }
+    .project-links a:hover { opacity: .7; }
+
+    /* ── RESOURCES ───────────────────────── */
+    #resources { background: var(--white); }
+    .resources-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .resource-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      text-decoration: none;
+      color: var(--navy);
+      transition: border-color .2s, background .2s;
+    }
+    .resource-item:hover {
+      border-color: var(--accent);
+      background: var(--white);
+    }
+    .resource-item i {
+      font-size: 20px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .resource-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .resource-desc {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* ── CONTACT ─────────────────────────── */
+    #contact { background: var(--navy); }
+    #contact .section-title { color: var(--white); }
+    #contact .section-sub { color: #8fa5c8; }
+    #contact .section-label { color: var(--accent); }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 48px;
+    }
+
+    .contact-form { display: flex; flex-direction: column; gap: 14px; }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .form-field label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--muted);
+    }
+    .form-field input,
+    .form-field textarea {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.15);
+      color: var(--white);
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      outline: none;
+      resize: vertical;
+      transition: border-color .2s;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus { border-color: var(--accent); }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: rgba(255,255,255,.25); }
+
+    .contact-social h3 {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #8fa5c8;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      transition: color .2s;
+    }
+    .social-link:hover { color: var(--white); }
+    .social-link i { font-size: 18px; color: var(--accent); width: 24px; text-align: center; }
+
+    /* ── FOOTER ──────────────────────────── */
+    footer {
+      background: var(--navy2);
+      color: var(--muted);
+      text-align: center;
+      padding: 28px 24px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+    footer span { color: var(--accent); }
+
+    /* ── TOAST ───────────────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      background: var(--navy);
+      border: 1px solid var(--accent);
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 12px 20px;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity .3s, transform .3s;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ──────────────────────── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .about-grid,
+      .contact-layout { grid-template-columns: 1fr; gap: 32px; }
+      section { padding: 60px 18px; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-ctas { flex-direction: column; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ── SCROLL REVEAL ────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="#hero" class="nav-logo">TECH<span>AMERA</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#resources">Resources</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about"     onclick="closeMenu()">About</a>
+    <a href="#skills"    onclick="closeMenu()">Skills</a>
+    <a href="#projects"  onclick="closeMenu()">Projects</a>
+    <a href="#contact"   onclick="closeMenu()">Contact</a>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">// HELLO, WORLD</p>
+      <h1 class="hero-name">Shadrack<span class="cursor"></span></h1>
+      <p class="hero-role">Web Developer, Tech Educator &amp; Music activist </p>
+      <p class="hero-bio">
+        I build websites, share coding resources, and help beginners find their footing in programming.
+        Founder of Tech Amera — a growing community for learners across Africa and beyond.
+      </p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-primary">View My Work</a>
+        <a href="#contact"  class="btn-outline">Get In Touch</a>
+      </div>
+      <p class="hero-scroll">SCROLL TO EXPLORE</p>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section id="about">
+    <div class="container">
+      <p class="section-label reveal">// 01 &mdash; ABOUT</p>
+      <h2 class="section-title reveal">Who I Am</h2>
+      <p class="section-sub reveal">A self-taught developer passionate about making tech accessible to everyone.</p>
+
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>
+            I'm Shadrack, the developer and educator behind Tech Amera. My mission is simple:
+            lower the barrier to entry for anyone who wants to learn to code — especially in Africa
+            where resources can be hard to come by.
+          </p>
+          <p>
+            I started this platform as a small demo and it grew into a full resource hub.
+            I believe programming is one of the most powerful skills a person can learn,
+            and I'm committed to sharing everything I know along the way.
+          </p>
+          <p>
+            When I'm not coding, I'm curating learning resources, creating content,
+            or collaborating with the community on social media.
+          </p>
+        </div>
+        <div class="about-stats reveal">
+          <div class="stat-card">
+            <div class="stat-num">6+</div>
+            <div class="stat-label">Platforms Curated</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">5</div>
+            <div class="stat-label">Social Channels</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">GH</div>
+            <div class="stat-label">Based in Ghana</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Things to Learn</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SKILLS ── -->
+  <section id="skills">
+    <div class="container">
+      <p class="section-label reveal">// 02 &mdash; SKILLS</p>
+      <h2 class="section-title reveal">What I Work With</h2>
+      <p class="section-sub reveal">Technologies and tools I use to bring ideas to life.</p>
+
+      <div class="skills-grid">
+        <div class="skill-pill reveal"><i class="fab fa-html5"></i> HTML5</div>
+        <div class="skill-pill reveal"><i class="fab fa-css3-alt"></i> CSS3</div>
+        <div class="skill-pill reveal"><i class="fab fa-git-alt"></i> Git</div>
+        <div class="skill-pill reveal"><i class="fas fa-code"></i> VS Code</div>
+        <div class="skill-pill reveal"><i class="fas fa-snake"></i> Adobe workshop</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section id="projects">
+    <div class="container">
+      <p class="section-label reveal">// 03 &mdash; PROJECTS</p>
+      <h2 class="section-title reveal">Things I've Built</h2>
+      <p class="section-sub reveal">A selection of projects — from personal tools to community resources.</p>
+
+      <div class="projects-grid">
+
+        <div class="project-card reveal">
+          <div class="project-card-top">
+            <div class="project-icon"><i class="fas fa-laptop-code"></i></div>
+            <div>
+              <div class="project-tag">Web</div>
+              <div style="font-family:var(--font-mono);font-size:12px;color:#fff;margin-top:2px;">Tech Amera</div>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-name">Tech Amera Platform</div>
+            <p class="project-desc">A resource hub for beginner coders — curating the best free platforms, tools, and learning paths.</p>
+            <div class="project-links">
+              <a href="index3.html"><i class="fas fa-external-link-alt"></i> Live Site</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-card-top">
+            <div class="project-icon"><i class="fas fa-music"></i></div>
+            <div>
+              <div class="project-tag">Media</div>
+              <div style="font-family:var(--font-mono);font-size:12px;color:#fff;margin-top:2px;">Skytech</div>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-name">Skytech Music Corner</div>
+            <p class="project-desc">A mini music player integrated into the site — letting visitors stream and download local artist tracks directly.</p>
+            <div class="project-links">
+              <a href="index2.html"><i class="fas fa-play-circle"></i> Preview</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-card-top">
+            <div class="project-icon"><i class="fas fa-robot"></i></div>
+            <div>
+              <div class="project-tag">AI / Tools</div>
+              <div style="font-family:var(--font-mono);font-size:12px;color:#fff;margin-top:2px;">AI Guide</div>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-name">AI Tools for Beginners</div>
+            <p class="project-desc">A curated guide helping newcomers understand and use AI tools like ChatGPT to accelerate their learning.</p>
+            <div class="project-links">
+              <a href="https://chat.openai.com/" target="_blank"><i class="fas fa-external-link-alt"></i> Visit</a>
+            </div>
+          </div>
+        </div>
+        
+         <div class="project-card reveal">
+          <div class="project-card-top">
+            <div class="project-icon"><i class="fas fa-image"></i></div>
+            <div>
+              <div class="project-tag">Image</div>
+              <div style="font-family:var(--font-mono);font-size:12px;color:#fff;margin-top:2px;">Song covers</div>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-name">Cover pictutes for songs</div>
+            <p class="project-desc">A display of few song cover projects worked on.</p>
+            <div class="project-links">
+              <a href="shayshay.html"><i class="fas fa-eye"></i> View</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-label reveal">// 04 &mdash; CONTACT</p>
+      <h2 class="section-title reveal">Get In Touch</h2>
+      <p class="section-sub reveal">Have a project idea, collab, or just want to say hello? Drop me a message.</p>
+
+      <div class="contact-layout">
+
+        <div class="contact-form reveal">
+          <div class="form-field">
+            <label>NAME</label>
+            <input type="text" id="fname" placeholder="Your name">
+          </div>
+          <div class="form-field">
+            <label>EMAIL</label>
+            <input type="email" id="femail" placeholder="your@email.com">
+          </div>
+          <div class="form-field">
+            <label>MESSAGE</label>
+            <textarea id="fmessage" rows="5" placeholder="What's on your mind?"></textarea>
+          </div>
+          <button class="btn-primary" onclick="sendMessage()" style="align-self:flex-start">
+            Send Message &rarr;
+          </button>
+        </div>
+
+        <div class="contact-social reveal">
+          <h3>Find Me Online</h3>
+          <div class="social-links">
+            <a href="mailto:shadrackeghan015@gmail.com" class="social-link">
+              <i class="fas fa-envelope"></i> shadrackeghan015@gmail.com
+            </a>
+            <a href="https://wa.me/+233596119789" target="_blank" class="social-link">
+              <i class="fab fa-whatsapp"></i> +233 596 119 789
+            </a>
+            <a href="https://x.com/KwekuPhilosopha" target="_blank" class="social-link">
+              <i class="fab fa-x-twitter"></i> @KwekuPhilosopha
+            </a>
+            <a href="https://www.facebook.com/kingayoze419" target="_blank" class="social-link">
+              <i class="fab fa-facebook"></i> Facebook
+            </a>
+            <a href="https://instagram.com/kingayoze419" target="_blank" class="social-link">
+              <i class="fab fa-instagram"></i> @kingayoze419
+            </a>
+            <a href="https://www.youtube.com/@kingayoze419" target="_blank" class="social-link">
+              <i class="fab fa-youtube"></i> YouTube Channel
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <p>&copy; 2025 <span>Tech Amera</span> &mdash; Built by Shadrack &middot; All rights reserved</p>
+  </footer>
+
+  <div id="toast">Message sent! I'll get back to you soon.</div>
+
+  <script>
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    }
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Contact form mock send
+    function sendMessage() {
+      const name    = document.getElementById('fname').value.trim();
+      const email   = document.getElementById('femail').value.trim();
+      const message = document.getElementById('fmessage').value.trim();
+      if (!name || !email || !message) {
+        showToast('Please fill in all fields.');
+        return;
+      }
+      showToast('Message sent! I\'ll get back to you soon.');
+      document.getElementById('fname').value = '';
+      document.getElementById('femail').value = '';
+      document.getElementById('fmessage').value = '';
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks  = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 80) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? '#fff' : '';
+      });
+    }, { passive: true });
+  </script>
+</body>
+</html>
