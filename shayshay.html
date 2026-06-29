@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ShayShay — Music</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -173,22 +174,100 @@
       margin-top: 0.3rem;
       text-transform: uppercase;
     }
-
-    .play-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 1px solid var(--gold);
-      background: transparent;
-      color: var(--gold);
+    
+    /* ── BONUS / MUSIC SECTION ── */
+    .bonus-section {
+      margin-bottom: 40px;
+    }
+    .bonus-section h2 {
+      font-family: var(--font-ui);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .music-card {
+      background: var(--navy-mid);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
       display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 380px;
+    }
+    .music-title {
+      font-family: var(--font-code);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .music-title span {
+      color: var(--white);
+      font-weight: 500;
+    }
+    .music-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .music-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      background: var(--blue-accent);
+      color: var(--white);
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .music-btn:hover { background: var(--blue-bright); }
+    .music-btn.outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .music-btn.outline:hover {
+      border-color: var(--blue-bright);
+      color: var(--white);
+    }
+    /* ── CARD ACTIONS ── */
+    .card-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .card-btn {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      transition: background 0.2s, color 0.2s;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--gold);
+      color: black;
       cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      text-decoration: none;
+      font-size: 0.75rem;
     }
-    .play-btn:hover { background: var(--gold); color: #000; }
+
+    .card-btn:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #000;
+    }
+
+    .card-btn.play-btn.playing {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #000;
+    }
 
     /* ── LIGHTBOX ── */
     .lightbox {
@@ -276,33 +355,37 @@
   </section>
 
   <section class="releases" id="releases">
-    <p class="section-label">Latest Releases</p>
+    <p class="section-label">Latest Releases
+    </p>
 
     <div class="grid">
-
       <div class="card" onclick="openLightbox(this)">
-        <img class="card-art" src="C1.png" alt="Watch No Man" />
+        <img class="card-art" src="C4.png" alt="Care for me" />
         <div class="card-info">
           <div>
-            <div class="card-title">Watch No Man</div>
+            <div class="card-title">Care for me</div>
             <div class="card-meta">Single &nbsp;·&nbsp; 2026</div>
           </div>
-          <button class="play-btn" aria-label="Play">
-            <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><path d="M0 0l12 7-12 7V0z"/></svg>
-          </button>
+          <div class="card-actions" onclick="event.stopPropagation()">
+            <button class="card-btn play-btn" id="playBtn" title="Play / Pause" onclick="togglePlay()">
+              <i class="fa-solid fa-play" id="playIcon"></i>
+            </button>
+            <a class="card-btn" href="Care for me.mp3" download="Care for me.mp3" title="Download">
+              <i class="fa-solid fa-download"></i>
+            </a>
+          </div>
         </div>
       </div>
+      <audio id="careAudio" src="Care for me.mp3"></audio>
 
       <div class="card" onclick="openLightbox(this)">
         <img class="card-art" src="C2.png" alt="Care For Me" />
         <div class="card-info">
           <div>
-            <div class="card-title">Ewiase ye sum</div>
+            <div class="card-title">Ewiase ye sum<br>
+            (Coming Soon)</div>
             <div class="card-meta">Single &nbsp;·&nbsp; 2026</div>
           </div>
-          <button class="play-btn" aria-label="Play">
-            <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><path d="M0 0l12 7-12 7V0z"/></svg>
-          </button>
         </div>
       </div>
 
@@ -310,31 +393,26 @@
         <img class="card-art" src="C3.png" alt="Always" />
         <div class="card-info">
           <div>
-            <div class="card-title">Always</div>
+            <div class="card-title">Always<br>
+            (Coming soon)</div>
             <div class="card-meta">Single &nbsp;·&nbsp; 2026</div>
           </div>
-          <button class="play-btn" aria-label="Play">
-            <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><path d="M0 0l12 7-12 7V0z"/></svg>
-          </button>
         </div>
       </div>
-
+      
       <div class="card" onclick="openLightbox(this)">
-        <img class="card-art" src="C4.png" alt="Ewiase Yesum" />
+        <img class="card-art" src="C1.png" alt="Watch No Man" />
         <div class="card-info">
           <div>
-            <div class="card-title">Care for me</div>
+            <div class="card-title">Watch No Man<br>
+            (Coming soon)</div>
             <div class="card-meta">Single &nbsp;·&nbsp; 2026</div>
           </div>
-          <button class="play-btn" aria-label="Play">
-            <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><path d="M0 0l12 7-12 7V0z"/></svg>
-          </button>
         </div>
       </div>
 
-    </div>
-  </section>
 
+  </section>
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox" onclick="closeLightbox()">
     <button class="lightbox-close" onclick="closeLightbox()">×</button>
@@ -344,12 +422,33 @@
   <footer>
     <div>
       <div class="gold-line"></div>
-      <p>© 2026 ShayShay · All rights reserved</p>
+      <p>© 2026 Tech Amera · All rights reserved</p>
     </div>
     <p>Parental Advisory — Explicit Content</p>
   </footer>
 
   <script>
+    const audio = document.getElementById('careAudio');
+    const playBtn = document.getElementById('playBtn');
+    const playIcon = document.getElementById('playIcon');
+
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+        playIcon.className = 'fa-solid fa-pause';
+        playBtn.classList.add('playing');
+      } else {
+        audio.pause();
+        playIcon.className = 'fa-solid fa-play';
+        playBtn.classList.remove('playing');
+      }
+    }
+
+    audio.addEventListener('ended', () => {
+      playIcon.className = 'fa-solid fa-play';
+      playBtn.classList.remove('playing');
+    });
+
     function openLightbox(card) {
       const img = card.querySelector('.card-art');
       document.getElementById('lightbox-img').src = img.src;
